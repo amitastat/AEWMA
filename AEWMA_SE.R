@@ -52,8 +52,8 @@ lim_k2=function(arl0,l,n,w,r){
 
 
 ##to make table for different m and delta for AMRL and SDMRL
-d2=c(0,0.05,0.1,0.25,0.5,1.0);d1=c(0.4,0.6,0.8,0.9,1,1.1,1.2,1.5,2)
-col_names=c("ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL");col_names=c("0.4","0.6","0.8","0.9","1","1.1","1.2","1.5","2")
+d2=c(0.1,0.25,0.5,1.0);d1=c(0.4,0.6,0.8,0.9,1,1.1,1.2,1.5,2);r=100000;n=5;l=0.1;L=2.82
+#col_names=c("ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL");row_names=c("0.4","0.6","0.8","0.9","1","1.1","1.2","1.5","2")
 ARL=matrix(0,length(d1),length(d2));SDRL=matrix(0,length(d1),length(d2));SERL=matrix(0,length(d1),length(d2))
 
 for(j in 1:length(d1))
@@ -70,9 +70,8 @@ for(j in 1:length(d1))
 
 write.table(cbind(ARL,SDRL,SERL),"tab_0.1l.csv",sep=",")
 
-bined=matrix(0,length(d1),18,dimnames=list(row_names,col_names))
-bined[,seq(1,18,3)]=ARL
-bined[,seq(2,18,3)]=SDRL
-bined[,seq(3,18,3)]=SERL
-write.table(bined,"bined.csv",sep=",")
-
+#bined=matrix(0,length(d1),18)
+#bined[,seq(1,18,3)]=ARL
+#bined[,seq(2,18,3)]=SDRL
+#bined[,seq(3,18,3)]=SERL
+#write.table(bined,"bined.csv",sep=",")
