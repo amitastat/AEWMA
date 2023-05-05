@@ -8,7 +8,7 @@ arl=function(l,n,L,r,d1,d2){
     mu_hat=apply(x,1,min);sigma_hat=apply(x,1,mean)-mu_hat
     y1=2*n*(mu_hat-mu0)/sigma0;y2=2*n*sigma_hat/sigma0
     z1=qnorm(pchisq(y1,2));z2=qnorm(pchisq(y2,2*(n-1)))
-    u1=0;v1=0;W=0;u0=0;v0=0;vw=0;UCL=0;LCL=0
+    u1=0;v1=0;W=0;u0=0;v0=0;vw=0;CL=0
     for(i in 1:length(z1)){
       u1[i]=(1-l)*u0+l*z1[i]
       u0=u1[i]
@@ -16,13 +16,12 @@ arl=function(l,n,L,r,d1,d2){
       v0=v1[i]
       W[i]=w*u1[i]+(1-w)*v1[i]
       vw[i]=(1-2*w+2*w^2)*l*(1-(1-l)^(2*i))/(2-l)
-      UCL[i]=L*sqrt(vw[i])
-      LCL[i]=-L*sqrt(vw[i])
+      CL[i]=L*sqrt(vw[i])
     }
     
     count=0
     for(i in 1:length(W)){
-      if(W[i]>LCL[i] & W[i]<UCL[i])
+      if(abs(W[i])<CL[i])
       {
         count=count+1
       }else{
@@ -52,7 +51,7 @@ lim_k2=function(arl0,l,n,w,r){
 
 
 ##to make table for different m and delta for AMRL and SDMRL
-d2=c(0.1,0.25,0.5,1.0);d1=c(0.4,0.6,0.8,0.9,1,1.1,1.2,1.5,2);r=100000;n=5;l=0.1;L=2.82
+d2=c(0,0.05,0.1,0.25,0.5,1.0);d1=c(0.4,0.6,0.8,0.9,1,1.1,1.2,1.5,2);r=100000;n=5;l=0.1;L=2.82
 #col_names=c("ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL","ARL","SDRL","SERL");row_names=c("0.4","0.6","0.8","0.9","1","1.1","1.2","1.5","2")
 ARL=matrix(0,length(d1),length(d2));SDRL=matrix(0,length(d1),length(d2));SERL=matrix(0,length(d1),length(d2))
 
@@ -75,3 +74,4 @@ write.table(cbind(ARL,SDRL,SERL),"tab_0.1l.csv",sep=",")
 #bined[,seq(2,18,3)]=SDRL
 #bined[,seq(3,18,3)]=SERL
 #write.table(bined,"bined.csv",sep=",")
+
